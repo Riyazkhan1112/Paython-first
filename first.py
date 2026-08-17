@@ -18,7 +18,7 @@ for a in revenue:
 if(1==1):
     print(True)
 else:
-    Print(False)
+    print(False)
 
 
 
