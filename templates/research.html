@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Hub - AI-Powered Research Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 8px 16px;
+            background: #e8eaf6;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .search-section {
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .results {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .result-card {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .result-topic {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .result-text {
+            color: #555;
+            line-height: 1.6;
+            font-size: 1em;
+        }
+
+        .error {
+            background: #fee;
+            border-left: 4px solid #f44;
+            color: #c33;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .history {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .history-title {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .history-item {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 0.95em;
+        }
+
+        .history-item:hover {
+            background: #e8eaf6;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-btn">← Back to Home</a>
+
+        <header>
+            <h1>🔍 Research Hub</h1>
+            <p class="subtitle">AI-Powered Research Tool</p>
+        </header>
+
+        <div class="search-section">
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="topicInput" 
+                    placeholder="Enter a topic for research..."
+                    autocomplete="off"
+                >
+                <button id="searchBtn" onclick="performResearch()">Research</button>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="color: #667eea; margin-top: 15px;">Researching...</p>
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <div class="results" id="results">
+            <div class="result-card">
+                <div class="result-topic" id="resultTopic"></div>
+                <div class="result-text" id="resultText"></div>
+            </div>
+        </div>
+
+        <div class="history" id="historyContainer" style="display: none;">
+            <div class="history-title">Recent Searches</div>
+            <div id="historyList"></div>
+        </div>
+    </div>
+
+    <script>
+        let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+        function performResearch() {
+            const topic = document.getElementById('topicInput').value.trim();
+            
+            if (!topic) {
+                showError('Please enter a topic');
+                return;
+            }
+
+            const searchBtn = document.getElementById('searchBtn');
+            searchBtn.disabled = true;
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('results').style.display = 'none';
+
+            fetch('/api/research', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ topic: topic })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loading').style.display = 'none';
+                searchBtn.disabled = false;
+
+                if (data.error) {
+                    showError(data.error);
+                } else {
+                    displayResults(data);
+                    addToHistory(topic);
+                }
+            })
+            .catch(error => {
+                document.getElementById('loading').style.display = 'none';
+                searchBtn.disabled = false;
+                showError('Error: ' + error.message);
+            });
+        }
+
+        function displayResults(data) {
+            document.getElementById('resultTopic').textContent = `Research on: ${data.topic}`;
+            document.getElementById('resultText').textContent = data.result;
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('topicInput').value = '';
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function addToHistory(topic) {
+            if (!searchHistory.includes(topic)) {
+                searchHistory.unshift(topic);
+                if (searchHistory.length > 10) {
+                    searchHistory.pop();
+                }
+                localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+                updateHistoryDisplay();
+            }
+        }
+
+        function updateHistoryDisplay() {
+            const historyContainer = document.getElementById('historyContainer');
+            const historyList = document.getElementById('historyList');
+            
+            if (searchHistory.length > 0) {
+                historyContainer.style.display = 'block';
+                historyList.innerHTML = searchHistory
+                    .map(item => `<div class="history-item" onclick="searchAgain('${item.replace(/'/g, "\\'")}')">${item}</div>`)
+                    .join('');
+            } else {
+                historyContainer.style.display = 'none';
+            }
+        }
+
+        function searchAgain(topic) {
+            document.getElementById('topicInput').value = topic;
+            performResearch();
+        }
+
+        // Allow Enter key to search
+        document.getElementById('topicInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                performResearch();
+            }
+        });
+
+        // Load history on page load
+        updateHistoryDisplay();
+    </script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools - Research & Chatbot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
+        }
+
+        .tool-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .tool-card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .tool-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 1em;
+        }
+
+        .tool-features {
+            text-align: left;
+            margin-bottom: 25px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .tool-features li {
+            color: #555;
+            margin-bottom: 8px;
+            list-style: none;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .tool-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .tool-btn {
+            display: inline-block;
+            padding: 12px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
+
+        .tool-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .tool-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 AI Tools Hub</h1>
+            <p>Powered by Google Gemini AI</p>
+        </div>
+
+        <div class="tools-grid">
+            <!-- Research Tool -->
+            <div class="tool-card" onclick="window.location.href='/research'">
+                <div class="tool-icon">🔍</div>
+                <h2>Research Hub</h2>
+                <p>Get AI-powered research on any topic in seconds</p>
+                <ul class="tool-features">
+                    <li>Deep topic research</li>
+                    <li>Quick summaries</li>
+                    <li>Search history</li>
+                </ul>
+                <button class="tool-btn">Start Researching →</button>
+            </div>
+
+            <!-- Chatbot -->
+            <div class="tool-card" onclick="window.location.href='/chatbot'">
+                <div class="tool-icon">💬</div>
+                <h2>AI Chatbot</h2>
+                <p>Chat with AI that remembers your conversation history</p>
+                <ul class="tool-features">
+                    <li>Full conversation history</li>
+                    <li>Multiple chats</li>
+                    <li>Persistent storage</li>
+                </ul>
+                <button class="tool-btn">Start Chatting →</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
