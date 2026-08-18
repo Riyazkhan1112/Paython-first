@@ -18,3 +18,34 @@ it can used as the strucutre output
 
 
 install request /. hird-party Requests Library.
+
+
+
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/api/health")
+async def health_check():
+    return {"status": "healthy"}
+
+
+
+create the fast api server
+
+
+
+install uv 
+
+
+uv is a tool that helps you create Python projects, install Python packages, and manage the Python environment.
+
+
+Python
+   ↓
+uv
+   ↓
+Install packages
+Create environment
+Run project
+Manage dependencies
